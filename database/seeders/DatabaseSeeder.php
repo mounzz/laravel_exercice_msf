@@ -3,7 +3,13 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\eleves;
 use Illuminate\Database\Seeder;
+use Database\Seeders\BatimentsSeeder;
+use Database\Seeders\FormationsSeeder;
+use Database\Seeders\TypeformationsSeeder;
+
+use Faker\Factory as Faker;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,11 +20,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $this->call([BatimentsSeeder::class,]);
+        $this->call([FormationsSeeder::class,]);
+        $this->call([TypeformationsSeeder::class,]);
+        eleves::factory(50)->create();
     }
 }

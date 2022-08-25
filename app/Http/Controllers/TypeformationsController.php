@@ -15,17 +15,8 @@ class TypeformationsController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $types = typeformations::all();
+        return view('frontoffice.pages.typeformations', compact('types'));
     }
 
     /**
@@ -34,9 +25,12 @@ class TypeformationsController extends Controller
      * @param  \App\Http\Requests\StoretypeformationsRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoretypeformationsRequest $request)
+    public function store(Request $request)
     {
-        //
+        $types = new typeformations;
+        $types -> nom = $request -> nom;
+        $types -> save();
+        return redirect('/');
     }
 
     /**
@@ -45,32 +39,11 @@ class TypeformationsController extends Controller
      * @param  \App\Models\typeformations  $typeformations
      * @return \Illuminate\Http\Response
      */
-    public function show(typeformations $typeformations)
+    public function show($id)
     {
-        //
-    }
+        $id_show = typeformations::find($id);
+        return view('backoffice.pages.backTypeFormations', compact('id_show'));
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\typeformations  $typeformations
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(typeformations $typeformations)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdatetypeformationsRequest  $request
-     * @param  \App\Models\typeformations  $typeformations
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdatetypeformationsRequest $request, typeformations $typeformations)
-    {
-        //
     }
 
     /**
@@ -79,8 +52,15 @@ class TypeformationsController extends Controller
      * @param  \App\Models\typeformations  $typeformations
      * @return \Illuminate\Http\Response
      */
-    public function destroy(typeformations $typeformations)
+    public function destroy($id)
     {
-        //
+        $destroy = typeformations::find($id);
+        $destroy -> delete();
+        return redirect()->back();
+    }
+
+    public function deleteAll(){
+        $deleteAll = typeformations::truncate();
+        return redirect("/typesformations");
     }
 }

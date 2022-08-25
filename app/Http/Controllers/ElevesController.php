@@ -15,17 +15,8 @@ class ElevesController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $eleves = eleves::all();
+        return view('frontoffice.pages.eleves', compact('eleves'));
     }
 
     /**
@@ -34,9 +25,15 @@ class ElevesController extends Controller
      * @param  \App\Http\Requests\StoreelevesRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreelevesRequest $request)
+    public function store(Request $request)
     {
-        //
+        $eleves = new eleves;
+        $eleves -> nom = $request -> nom;
+        $eleves -> prenom = $request -> prenom;
+        $eleves -> age = $request -> age;
+        $eleves -> etat = $request -> etat;
+        $eleves -> save();
+        return redirect('/');
     }
 
     /**
@@ -45,32 +42,10 @@ class ElevesController extends Controller
      * @param  \App\Models\eleves  $eleves
      * @return \Illuminate\Http\Response
      */
-    public function show(eleves $eleves)
+    public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\eleves  $eleves
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(eleves $eleves)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateelevesRequest  $request
-     * @param  \App\Models\eleves  $eleves
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateelevesRequest $request, eleves $eleves)
-    {
-        //
+        $id_show = eleves::find($id);
+        return view('backoffice.pages.backEleves', compact('id_show'));
     }
 
     /**
@@ -79,8 +54,15 @@ class ElevesController extends Controller
      * @param  \App\Models\eleves  $eleves
      * @return \Illuminate\Http\Response
      */
-    public function destroy(eleves $eleves)
+    public function destroy($id)
     {
-        //
+        $destroy = eleves::find($id);
+        $destroy -> delete();
+        return redirect()->back();
+    }
+
+    public function deleteAll(){
+        $deleteAll = eleves::truncate();
+        return redirect("/eleves");
     }
 }

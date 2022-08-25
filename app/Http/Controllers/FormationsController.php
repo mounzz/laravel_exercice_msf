@@ -15,18 +15,10 @@ class FormationsController extends Controller
      */
     public function index()
     {
-        //
+        $formations = formations::all();
+        return view('frontoffice.pages.formations', compact('formations'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -34,9 +26,14 @@ class FormationsController extends Controller
      * @param  \App\Http\Requests\StoreformationsRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreformationsRequest $request)
+    public function store(Request $request)
     {
-        //
+        $formations = new formations;
+        $formations -> nom = $request -> nom;
+        $formations -> description = $request -> description;
+        $formations -> save();
+        return redirect('/');
+
     }
 
     /**
@@ -45,32 +42,10 @@ class FormationsController extends Controller
      * @param  \App\Models\formations  $formations
      * @return \Illuminate\Http\Response
      */
-    public function show(formations $formations)
+    public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\formations  $formations
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(formations $formations)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateformationsRequest  $request
-     * @param  \App\Models\formations  $formations
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateformationsRequest $request, formations $formations)
-    {
-        //
+        $id_show = formations::find($id);
+        return view('backoffice.pages.backFormations', compact('id_show'));
     }
 
     /**
@@ -79,8 +54,15 @@ class FormationsController extends Controller
      * @param  \App\Models\formations  $formations
      * @return \Illuminate\Http\Response
      */
-    public function destroy(formations $formations)
+    public function destroy($id)
     {
-        //
+        $destroy = formations::find($id);
+        $destroy -> delete();
+        return redirect()->back;
+    }
+
+    public function deleteAll(){
+        $deleteAll = formations::truncate();
+        return redirect("/formations");
     }
 }

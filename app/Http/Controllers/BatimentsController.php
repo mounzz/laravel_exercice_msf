@@ -15,17 +15,8 @@ class BatimentsController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $batiments = batiments::all();
+        return view('frontoffice.pages.batiments', compact('batiments'));
     }
 
     /**
@@ -34,9 +25,13 @@ class BatimentsController extends Controller
      * @param  \App\Http\Requests\StorebatimentsRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorebatimentsRequest $request)
+    public function store(Request $request)
     {
-        //
+        $batiments = new batiments;
+        $batiments -> nom = $request -> nom ;
+        $batiments -> description = $request -> description;
+        $batiments -> save();
+        return redirect('/');
     }
 
     /**
@@ -45,32 +40,10 @@ class BatimentsController extends Controller
      * @param  \App\Models\batiments  $batiments
      * @return \Illuminate\Http\Response
      */
-    public function show(batiments $batiments)
+    public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\batiments  $batiments
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(batiments $batiments)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdatebatimentsRequest  $request
-     * @param  \App\Models\batiments  $batiments
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdatebatimentsRequest $request, batiments $batiments)
-    {
-        //
+        $id_show = batiments::find($id);
+        return view('backoffice.pages.backBatiments', compact('id_show'));
     }
 
     /**
@@ -79,8 +52,15 @@ class BatimentsController extends Controller
      * @param  \App\Models\batiments  $batiments
      * @return \Illuminate\Http\Response
      */
-    public function destroy(batiments $batiments)
+    public function destroy($id)
     {
-        //
+        $destroy = batiments::find($id);
+        $destroy -> delete();
+        return redirect()->back();
+    }
+
+    public function deleteAll(){
+        $deleteAll = batiments::truncate();
+        return redirect("/batiments");
     }
 }
