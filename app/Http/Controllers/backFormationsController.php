@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\formations;
 use Illuminate\Http\Request;
 
 class backFormationsController extends Controller
@@ -10,7 +11,7 @@ class backFormationsController extends Controller
         $formations = formations::find($id);
         $formations -> nom = $request -> nom;
         $formations -> description = $request -> description;
-        $eleves -> save();
+        $formations -> save();
         return redirect()->back();
     }
 }

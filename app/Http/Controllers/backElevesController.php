@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\eleves;
 use Illuminate\Http\Request;
 
 class backElevesController extends Controller
